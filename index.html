@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flor e Coração</title>
+    <style>
+        canvas {
+            background-color: darkgrey;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Função para desenhar uma pétala
+        function drawPetal(x, y, width, height, color) {
+            ctx.beginPath();
+            ctx.ellipse(x, y, width, height, 0, 0, Math.PI * 2);
+            ctx.fillStyle = color;
+            ctx.fill();
+        }
+
+        // Desenhar a flor
+        function drawFlower() {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+
+            // Pétalas
+            for (let i = 0; i < 6; i++) {
+                const angle = (Math.PI / 3) * i;
+                const x = centerX + Math.cos(angle) * 50;
+                const y = centerY + Math.sin(angle) * 50;
+                drawPetal(x, y, 30, 60, "yellow");
+            }
+
+            // Centro da flor
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 20, 0, Math.PI * 2);
+            ctx.fillStyle = "orange";
+            ctx.fill();
+        }
+
+        // Desenhar o coração
+        function drawHeart(x, y, size, color) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.bezierCurveTo(x - size / 2, y - size / 2, x - size, y + size / 3, x, y + size);
+            ctx.bezierCurveTo(x + size, y + size / 3, x + size / 2, y - size / 2, x, y);
+            ctx.fillStyle = color;
+            ctx.fill();
+        }
+
+        // Desenhar texto
+        function drawText(text, x, y) {
+            ctx.fillStyle = "black";
+            ctx.font = "45px Stencil";
+            ctx.textAlign = "center";
+            ctx.fillText(text, x, y);
+        }
+
+        // Executar os desenhos
+        function draw() {
+            drawFlower(); // Flor no centro
+            drawHeart(400, 450, 50, "red"); // Coração
+            drawText("PARA TI HERMOSA!!", 400, 100); // Texto
+        }
+
+        draw();
+    </script>
+</body>
+</html>
